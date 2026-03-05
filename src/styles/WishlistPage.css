@@ -1,0 +1,268 @@
+/* ===== WISHLIST PAGE ===== */
+.wishlist-page {
+    min-height: 70vh;
+    padding: 36px 0 60px;
+    background: var(--bg-main);
+}
+
+.wishlist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.wishlist-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wishlist-icon {
+    color: #FF5B5B;
+}
+
+.wishlist-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.wishlist-count {
+    padding: 3px 10px;
+    background: rgba(255, 91, 91, 0.1);
+    border: 1px solid rgba(255, 91, 91, 0.2);
+    color: #FF5B5B;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.wishlist-clear-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.wishlist-clear-btn:hover {
+    border-color: #FF5B5B;
+    color: #FF5B5B;
+}
+
+/* Grid */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.wishlist-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.wishlist-card:hover {
+    border-color: transparent;
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+}
+
+.wc-img-wrap {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+}
+
+.wc-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.wishlist-card:hover .wc-img-wrap img {
+    transform: scale(1.06);
+}
+
+.wc-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.wc-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.wishlist-card:hover .wc-actions {
+    opacity: 1;
+}
+
+.wc-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    color: #FF5B5B;
+}
+
+.wc-action-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+/* Body */
+.wc-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.wc-category {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #23E5DB;
+}
+
+.wc-price {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.wc-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.wc-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.wc-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.wc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.wc-views {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.wc-contact-btn {
+    padding: 7px 14px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.wc-contact-btn:hover {
+    background: var(--primary-light);
+}
+
+/* Empty state */
+.wishlist-empty {
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.wishlist-empty-icon {
+    font-size: 64px;
+}
+
+.wishlist-empty h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.wishlist-empty p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 320px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .wishlist-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .wishlist-grid {
+        grid-template-columns: 1fr;
+    }
+}
