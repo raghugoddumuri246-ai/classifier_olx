@@ -257,13 +257,22 @@ export default function SellNowModal({ onClose }) {
                                     <label className="section-sub-title form-sp">CONFIRM YOUR LOCATION</label>
                                     <div className="location-box">
                                         <MapPin size={16} />
-                                        <input
-                                            type="text"
-                                            placeholder="Enter your city or area"
+                                        <select
+                                            className="location-select"
                                             value={form.location}
                                             onChange={e => update('location', e.target.value)}
                                             required
-                                        />
+                                        >
+                                            <option value="" disabled>Select your city or area</option>
+                                            <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
+                                            <option value="Delhi, NCR">Delhi, NCR</option>
+                                            <option value="Bangalore, Karnataka">Bangalore, Karnataka</option>
+                                            <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
+                                            <option value="Chennai, Tamil Nadu">Chennai, Tamil Nadu</option>
+                                            <option value="Kolkata, West Bengal">Kolkata, West Bengal</option>
+                                            <option value="Pune, Maharashtra">Pune, Maharashtra</option>
+                                            <option value="Ahmedabad, Gujarat">Ahmedabad, Gujarat</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

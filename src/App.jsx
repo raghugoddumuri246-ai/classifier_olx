@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import ListingsPage from './pages/ListingsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import WishlistPage from './pages/WishlistPage';
+import ListingDetailPage from './pages/ListingDetailPage';
 import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
 import SellNowModal from './components/SellNowModal';
@@ -42,6 +43,7 @@ function App() {
             />
             <Route path="/notifications" element={<NotificationsPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/listing/:id" element={<ListingDetailPage />} />
           </Routes>
         </main>
 

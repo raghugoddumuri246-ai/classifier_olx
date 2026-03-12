@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, MapPin, Eye, Clock, Star, Zap } from 'lucide-react';
 import '../styles/ListingCard.css';
 
@@ -28,7 +29,7 @@ export default function ListingCard({ listing }) {
     const [imgError, setImgError] = useState(false);
 
     return (
-        <div className="listing-card">
+        <Link to={`/listing/${listing.id}`} className="listing-card" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
             {/* Image */}
             <div className="card-image-wrap">
                 <img
@@ -56,7 +57,7 @@ export default function ListingCard({ listing }) {
                 {/* Wishlist */}
                 <button
                     className={`wishlist-btn ${wished ? 'wished' : ''}`}
-                    onClick={(e) => { e.preventDefault(); setWished(!wished); }}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWished(!wished); }}
                     title="Save to wishlist"
                 >
                     <Heart size={16} fill={wished ? 'currentColor' : 'none'} />
@@ -95,6 +96,6 @@ export default function ListingCard({ listing }) {
                     <span className="card-seller">{listing.seller}</span>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

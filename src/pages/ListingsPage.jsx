@@ -1,45 +1,20 @@
 import { useState, useMemo } from 'react';
-import { LayoutGrid, List, SortDesc, ChevronDown, Filter, X } from 'lucide-react';
-import FilterSidebar from '../components/FilterSidebar';
+import { LayoutGrid, List, SortDesc, ChevronDown, X } from 'lucide-react';
 import ListingCard from '../components/ListingCard';
 import HeroBanner from '../components/HeroBanner';
 import CategoryGrid from '../components/CategoryGrid';
 import { listings, categories, sortOptions } from '../data/listings';
 import '../styles/ListingsPage.css';
 
-const defaultFilters = {
-    priceRange: null,
-    customMin: '',
-    customMax: '',
-    condition: null,
-    postedWithin: null,
-    onlyFeatured: false,
-};
-
-function getDateThreshold(postedWithin) {
-    const now = new Date('2024-03-02');
-    if (postedWithin === 'Today') return new Date(now - 1 * 86400000);
-    if (postedWithin === 'Last 3 Days') return new Date(now - 3 * 86400000);
-    if (postedWithin === 'This Week') return new Date(now - 7 * 86400000);
-    if (postedWithin === 'This Month') return new Date(now - 30 * 86400000);
-    return null;
-}
-
 export default function ListingsPage({ searchQuery, selectedLocation, onSearchChange }) {
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [filters, setFilters] = useState(defaultFilters);
     const [sortBy, setSortBy] = useState('newest');
     const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
     const [sortOpen, setSortOpen] = useState(false);
-    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
-    const handleFilterChange = (key, value) => {
-        setFilters((prev) => ({ ...prev, [key]: value }));
-    };
 
     const handleClearFilters = () => {
-        setFilters(defaultFilters);
         setSelectedCategory('all');
+        if (onSearchChange) onSearchChange('');
     };
 
     const filtered = useMemo(() => {
@@ -66,39 +41,6 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
             result = result.filter((l) => l.category === selectedCategory);
         }
 
-        // Price range (predefined)
-        if (filters.priceRange) {
-            result = result.filter(
-                (l) => l.price >= filters.priceRange.min && l.price <= filters.priceRange.max
-            );
-        }
-
-        // Custom price range
-        if (filters.customMin) {
-            result = result.filter((l) => l.price >= Number(filters.customMin));
-        }
-        if (filters.customMax) {
-            result = result.filter((l) => l.price <= Number(filters.customMax));
-        }
-
-        // Condition
-        if (filters.condition) {
-            result = result.filter((l) => l.condition === filters.condition);
-        }
-
-        // Posted within
-        if (filters.postedWithin) {
-            const threshold = getDateThreshold(filters.postedWithin);
-            if (threshold) {
-                result = result.filter((l) => new Date(l.postedAt) >= threshold);
-            }
-        }
-
-        // Featured only
-        if (filters.onlyFeatured) {
-            result = result.filter((l) => l.isFeatured);
-        }
-
         // Sort
         result.sort((a, b) => {
             if (sortBy === 'newest') return new Date(b.postedAt) - new Date(a.postedAt);
@@ -109,7 +51,7 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
         });
 
         return result;
-    }, [searchQuery, selectedLocation, selectedCategory, filters, sortBy]);
+    }, [searchQuery, selectedLocation, selectedCategory, sortBy]);
 
     const currentSortLabel = sortOptions.find((s) => s.value === sortBy)?.label;
 
@@ -122,53 +64,9 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
             <CategoryGrid onCategorySelect={(cat) => { setSelectedCategory(cat); window.scrollTo({ top: 600, behavior: 'smooth' }); }} />
 
             <div id="listings-section" className="container listings-layout">
-                {/* Mobile Filter Toggle */}
-                <div className="mobile-filter-row">
-                    <button
-                        className="mobile-filter-toggle"
-                        onClick={() => setMobileSidebarOpen(true)}
-                    >
-                        <Filter size={16} /> Filters
-                    </button>
-                    <div className="mobile-results-count">{filtered.length} results</div>
-                </div>
-
-                {/* Mobile Sidebar Overlay */}
-                {mobileSidebarOpen && (
-                    <div className="mobile-sidebar-overlay" onClick={() => setMobileSidebarOpen(false)}>
-                        <div className="mobile-sidebar-panel" onClick={(e) => e.stopPropagation()}>
-                            <button className="close-sidebar" onClick={() => setMobileSidebarOpen(false)}>
-                                <X size={20} /> Close
-                            </button>
-                            <FilterSidebar
-                                categories={categories}
-                                selectedCategory={selectedCategory}
-                                onCategoryChange={(c) => { setSelectedCategory(c); setMobileSidebarOpen(false); }}
-                                filters={filters}
-                                onFilterChange={handleFilterChange}
-                                onClearFilters={handleClearFilters}
-                                totalResults={filtered.length}
-                            />
-                        </div>
-                    </div>
-                )}
-
                 <div className="listings-main">
-                    {/* Desktop Filter Sidebar */}
-                    <div className="desktop-sidebar">
-                        <FilterSidebar
-                            categories={categories}
-                            selectedCategory={selectedCategory}
-                            onCategoryChange={setSelectedCategory}
-                            filters={filters}
-                            onFilterChange={handleFilterChange}
-                            onClearFilters={handleClearFilters}
-                            totalResults={filtered.length}
-                        />
-                    </div>
-
                     {/* Right Side */}
-                    <div className="listings-right">
+                    <div className="listings-right" style={{ width: '100%', flex: '1' }}>
                         {/* Toolbar */}
                         <div className="listings-toolbar">
                             <div className="toolbar-left">
@@ -226,7 +124,7 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
                         </div>
 
                         {/* Active Filters Strip */}
-                        {(searchQuery || filters.priceRange || filters.condition || filters.postedWithin || filters.onlyFeatured || selectedCategory !== 'all') && (
+                        {(searchQuery || selectedCategory !== 'all') && (
                             <div className="active-filters">
                                 <span className="af-label">Active:</span>
                                 {searchQuery && (
@@ -239,30 +137,6 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
                                     <span className="af-tag">
                                         {categories.find((c) => c.id === selectedCategory)?.label}
                                         <button onClick={() => setSelectedCategory('all')}><X size={11} /></button>
-                                    </span>
-                                )}
-                                {filters.priceRange && (
-                                    <span className="af-tag">
-                                        {filters.priceRange.label}
-                                        <button onClick={() => handleFilterChange('priceRange', null)}><X size={11} /></button>
-                                    </span>
-                                )}
-                                {filters.condition && (
-                                    <span className="af-tag">
-                                        {filters.condition}
-                                        <button onClick={() => handleFilterChange('condition', null)}><X size={11} /></button>
-                                    </span>
-                                )}
-                                {filters.postedWithin && (
-                                    <span className="af-tag">
-                                        {filters.postedWithin}
-                                        <button onClick={() => handleFilterChange('postedWithin', null)}><X size={11} /></button>
-                                    </span>
-                                )}
-                                {filters.onlyFeatured && (
-                                    <span className="af-tag">
-                                        Featured
-                                        <button onClick={() => handleFilterChange('onlyFeatured', false)}><X size={11} /></button>
                                     </span>
                                 )}
                             </div>
