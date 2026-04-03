@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SlidersHorizontal, ChevronDown, ChevronUp, X, Check } from 'lucide-react';
 import '../styles/FilterSidebar.css';
 
@@ -28,151 +28,146 @@ function FilterSection({ title, children, defaultOpen = true }) {
 
 export default function FilterSidebar({
     categories,
-    selectedCategory,
-    onCategoryChange,
-    filters,
-    onFilterChange,
-    onClearFilters,
+    initialCategory,
+    initialFilters,
+    isOpen,
+    onClose,
+    onApply,
     totalResults,
 }) {
+    // Local state for filters so they don't apply immediately
+    const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
+    const [filters, setFilters] = useState(initialFilters || {});
+
+    // Sync local state when opened
+    useEffect(() => {
+        if (isOpen) {
+            setSelectedCategory(initialCategory);
+            setFilters(initialFilters);
+        }
+    }, [isOpen, initialCategory, initialFilters]);
+
+    if (!isOpen) return null;
+
+    const handleFilterChange = (key, value) => {
+        setFilters(prev => ({ ...prev, [key]: value }));
+    };
+
+    const handleClearLocal = () => {
+        setSelectedCategory('all');
+        setFilters({});
+    };
+
+    const handleApply = () => {
+        onApply(selectedCategory, filters);
+        onClose();
+    };
+
     const activeFilterCount = [
         filters.priceRange,
         filters.condition,
         filters.postedWithin,
         filters.onlyFeatured,
-    ].filter(Boolean).length;
+    ].filter(Boolean).length + (selectedCategory !== 'all' ? 1 : 0);
 
     return (
-        <aside className="filter-sidebar">
-            {/* Sidebar Header */}
-            <div className="sidebar-header">
-                <div className="sidebar-title">
-                    <SlidersHorizontal size={18} />
-                    <span>Filters</span>
-                    {activeFilterCount > 0 && (
-                        <span className="filter-badge">{activeFilterCount}</span>
-                    )}
-                </div>
-                {activeFilterCount > 0 && (
-                    <button className="clear-btn" onClick={onClearFilters}>
-                        <X size={14} />
-                        Clear all
+        <div className="filter-modal-overlay" onClick={onClose}>
+            <aside className="filter-sidebar modal-content" onClick={e => e.stopPropagation()}>
+                {/* Sidebar Header */}
+                <div className="sidebar-header">
+                    <div className="sidebar-title">
+                        <SlidersHorizontal size={18} />
+                        <span>Filters</span>
+                    </div>
+                    <button className="close-btn" onClick={onClose}>
+                        <X size={18} />
                     </button>
-                )}
-            </div>
-
-            {/* Results count */}
-            <div className="results-count">
-                <span className="count-num">{totalResults}</span> results found
-            </div>
-
-            {/* Category Filter */}
-            <FilterSection title="Category">
-                <div className="filter-options">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            className={`filter-option category-option ${selectedCategory === cat.id ? 'active' : ''}`}
-                            onClick={() => onCategoryChange(cat.id)}
-                        >
-                            <span className="cat-emoji">{cat.icon}</span>
-                            <span>{cat.label}</span>
-                            {selectedCategory === cat.id && <Check size={14} className="check-icon" />}
-                        </button>
-                    ))}
                 </div>
-            </FilterSection>
 
-            {/* Price Range */}
-            <FilterSection title="Price Range">
-                <div className="filter-options">
-                    {priceRanges.map((range) => {
-                        const isActive = filters.priceRange?.label === range.label;
-                        return (
-                            <button
-                                key={range.label}
-                                className={`filter-option ${isActive ? 'active' : ''}`}
-                                onClick={() =>
-                                    onFilterChange('priceRange', isActive ? null : range)
-                                }
-                            >
-                                <span>{range.label}</span>
-                                {isActive && <Check size={14} className="check-icon" />}
-                            </button>
-                        );
-                    })}
-                </div>
-                {/* Custom Range */}
-                <div className="custom-price">
-                    <input
-                        type="number"
-                        placeholder="Min ₹"
-                        value={filters.customMin || ''}
-                        onChange={(e) => onFilterChange('customMin', e.target.value)}
-                    />
-                    <span>–</span>
-                    <input
-                        type="number"
-                        placeholder="Max ₹"
-                        value={filters.customMax || ''}
-                        onChange={(e) => onFilterChange('customMax', e.target.value)}
-                    />
-                </div>
-            </FilterSection>
+                <div className="filter-scrollable-content">
+                    {/* Category Filter */}
+                    <FilterSection title="Category">
+                        <div className="filter-options">
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat.id}
+                                    className={`filter-option category-option ${selectedCategory === cat.id ? 'active' : ''}`}
+                                    onClick={() => setSelectedCategory(cat.id)}
+                                >
+                                    <span className="cat-emoji">{cat.icon}</span>
+                                    <span>{cat.label}</span>
+                                    {selectedCategory === cat.id && <Check size={14} className="check-icon" />}
+                                </button>
+                            ))}
+                        </div>
+                    </FilterSection>
 
-            {/* Condition */}
-            <FilterSection title="Condition">
-                <div className="filter-options">
-                    {conditions.map((cond) => {
-                        const isActive = filters.condition === cond;
-                        return (
-                            <button
-                                key={cond}
-                                className={`filter-option ${isActive ? 'active' : ''}`}
-                                onClick={() => onFilterChange('condition', isActive ? null : cond)}
-                            >
-                                <span>{cond}</span>
-                                {isActive && <Check size={14} className="check-icon" />}
-                            </button>
-                        );
-                    })}
-                </div>
-            </FilterSection>
+                    {/* Price Range */}
+                    <FilterSection title="Price Range">
+                        <div className="filter-options">
+                            {priceRanges.map((range) => {
+                                const isActive = filters.priceRange?.label === range.label;
+                                return (
+                                    <button
+                                        key={range.label}
+                                        className={`filter-option ${isActive ? 'active' : ''}`}
+                                        onClick={() =>
+                                            handleFilterChange('priceRange', isActive ? null : range)
+                                        }
+                                    >
+                                        <span>{range.label}</span>
+                                        {isActive && <Check size={14} className="check-icon" />}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        {/* Custom Range */}
+                        <div className="custom-price">
+                            <input
+                                type="number"
+                                placeholder="Min ₹"
+                                value={filters.customMin || ''}
+                                onChange={(e) => handleFilterChange('customMin', e.target.value)}
+                            />
+                            <span>–</span>
+                            <input
+                                type="number"
+                                placeholder="Max ₹"
+                                value={filters.customMax || ''}
+                                onChange={(e) => handleFilterChange('customMax', e.target.value)}
+                            />
+                        </div>
+                    </FilterSection>
 
-            {/* Posted Within */}
-            <FilterSection title="Posted Within">
-                <div className="filter-options">
-                    {['Today', 'Last 3 Days', 'This Week', 'This Month'].map((period) => {
-                        const isActive = filters.postedWithin === period;
-                        return (
-                            <button
-                                key={period}
-                                className={`filter-option ${isActive ? 'active' : ''}`}
-                                onClick={() => onFilterChange('postedWithin', isActive ? null : period)}
-                            >
-                                <span>{period}</span>
-                                {isActive && <Check size={14} className="check-icon" />}
-                            </button>
-                        );
-                    })}
+                    {/* Condition */}
+                    <FilterSection title="Condition">
+                        <div className="filter-options">
+                            {conditions.map((cond) => {
+                                const isActive = filters.condition === cond;
+                                return (
+                                    <button
+                                        key={cond}
+                                        className={`filter-option ${isActive ? 'active' : ''}`}
+                                        onClick={() => handleFilterChange('condition', isActive ? null : cond)}
+                                    >
+                                        <span>{cond}</span>
+                                        {isActive && <Check size={14} className="check-icon" />}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </FilterSection>
                 </div>
-            </FilterSection>
 
-            {/* Featured Toggle */}
-            <FilterSection title="Listing Type" defaultOpen={false}>
-                <label className="toggle-option">
-                    <div className="toggle-info">
-                        <span className="toggle-label">Featured Only</span>
-                        <span className="toggle-desc">Show premium listings</span>
-                    </div>
-                    <div
-                        className={`toggle-switch ${filters.onlyFeatured ? 'on' : ''}`}
-                        onClick={() => onFilterChange('onlyFeatured', !filters.onlyFeatured)}
-                    >
-                        <div className="toggle-thumb" />
-                    </div>
-                </label>
-            </FilterSection>
-        </aside>
+                <div className="filter-actions-footer">
+                    <button className="reset-btn" onClick={handleClearLocal}>
+                        Reset
+                    </button>
+                    <button className="apply-btn" onClick={handleApply}>
+                        Apply
+                    </button>
+                </div>
+            </aside>
+        </div>
     );
 }

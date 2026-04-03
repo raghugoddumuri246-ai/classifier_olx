@@ -18,26 +18,29 @@
    ═══════════════════════════════════════════════════ */
 
 :root {
-  /* Surfaces */
-  --surface-dark: #0A1F1C;
-  --primary: #002F34;
-  --primary-light: #004d54;
-  --accent: #23E5DB;
-  --accent-warm: #FFCE32;
+  /* Surfaces Light Mode */
+  --surface-dark: #FFFFFF;
+  --primary: #1b3b64; /* Navy Blue */
+  --primary-light: #2A4365;
+  --accent: #3182CE;
+  --accent-warm: #E2E8F0;
 
   /* Page & Cards */
-  --bg-main: #F4F6F7;
+  --bg-main: #F4F7FB;
   --bg-card: #FFFFFF;
 
   /* Text */
-  --text-primary: #1A1A2E;
-  --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
+  --text-primary: #1A202C;
+  --text-secondary: #4A5568;
+  --text-muted: #A0AEC0;
+  --text-on-dark: #F7FAFC; /* Added for elements needing white text on dark bg */
 
   /* Borders */
-  --border: #E5E7EB;
-  --border-hover: #B0B7C3;
+  --border: #E2E8F0;
+  --border-hover: #CBD5E0;
+}
 
+:root {
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.10);
@@ -52,6 +55,25 @@
   --radius-xl: 24px;
 
   --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme='dark'] {
+  --surface-dark: #121212;
+  --primary: #90CDF4;
+  --primary-light: #63B3ED;
+  --accent: #3182CE;
+  --accent-warm: #2D3748;
+
+  --bg-main: #0B0F19;
+  --bg-card: #1A202C;
+
+  --text-primary: #F7FAFC;
+  --text-secondary: #A0AEC0;
+  --text-muted: #718096;
+  --text-on-dark: #1A202C; /* Inverse */
+
+  --border: #2D3748;
+  --border-hover: #4A5568;
 }
 
 /* ── Reset ── */

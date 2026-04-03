@@ -3,8 +3,13 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #0A1F1C;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.25);
+    background: var(--surface-dark);
+    box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s ease;
+}
+
+[data-theme='dark'] .navbar {
+    box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0, 0, 0, 0.25);
 }
 
 .navbar-inner {
@@ -27,12 +32,12 @@
 .logo-badge {
     width: 28px;
     height: 28px;
-    background: #23E5DB;
+    background: var(--accent);
     border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #002F34;
+    color: #fff;
     margin-right: 4px;
 }
 
@@ -40,21 +45,21 @@
     font-family: 'Poppins', sans-serif;
     font-size: 22px;
     font-weight: 800;
-    color: #fff;
+    color: var(--primary);
     letter-spacing: -0.5px;
 }
 
 .logo-dot {
     font-size: 26px;
     font-weight: 900;
-    color: #FFCE32;
+    color: var(--accent-warm);
     line-height: 1;
 }
 
 .logo-in {
     font-size: 13px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
     margin-top: 4px;
 }
 
@@ -65,8 +70,8 @@
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: var(--bg-main);
+    border: 1px solid var(--border);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
@@ -75,12 +80,11 @@
 }
 
 .navbar-location:hover {
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(35, 229, 219, 0.3);
+    background: var(--border);
 }
 
 .location-icon {
-    color: #23E5DB;
+    color: var(--accent);
     flex-shrink: 0;
 }
 
@@ -93,7 +97,7 @@
 .location-hint {
     font-size: 9px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.6px;
     line-height: 1;
@@ -102,13 +106,13 @@
 .location-text {
     font-size: 13px;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-primary);
     line-height: 1.2;
 }
 
 .chevron {
     margin-left: auto;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     transition: transform 0.2s ease;
     flex-shrink: 0;
 }
@@ -122,10 +126,10 @@
     top: calc(100% + 10px);
     left: 0;
     min-width: 200px;
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 14px;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     overflow: hidden;
     animation: slideDown 0.18s ease;
     z-index: 300;
@@ -137,8 +141,8 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    color: #9CA3AF;
-    border-bottom: 1px solid #E5E7EB;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
 }
 
 .location-item {
@@ -147,24 +151,24 @@
     gap: 8px;
     padding: 9px 14px;
     font-size: 13px;
-    color: #1A1A2E;
+    color: var(--text-primary);
     cursor: pointer;
     transition: background 0.15s;
 }
 
 .location-item:hover {
-    background: #F4F6F7;
+    background: var(--bg-main);
 }
 
 .location-item.active {
-    background: rgba(0, 47, 52, 0.06);
-    color: #002F34;
+    background: var(--border);
+    color: var(--primary);
     font-weight: 600;
 }
 
 .loc-check {
     margin-left: auto;
-    color: #23E5DB;
+    color: var(--accent);
     font-weight: 700;
 }
 
@@ -174,17 +178,17 @@
     max-width: 600px;
     height: 44px;
     display: flex;
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 12px;
     overflow: hidden;
     margin: 0 16px;
-    border: 2px solid transparent;
+    border: 2px solid var(--border);
     transition: all 0.22s ease;
 }
 
 .navbar-search:focus-within {
-    border-color: #23E5DB;
-    box-shadow: 0 0 0 3px rgba(35, 229, 219, 0.2);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
 }
 
 .navbar-search input {
@@ -192,18 +196,19 @@
     border: none;
     padding: 0 16px;
     font-size: 14px;
-    color: #1A1A2E;
+    color: var(--text-primary);
     outline: none;
+    background: transparent;
 }
 
 .navbar-search input::placeholder {
-    color: #9CA3AF;
+    color: var(--text-muted);
 }
 
 .search-btn {
     width: 54px;
-    background: #002F34;
-    color: #fff;
+    background: var(--primary);
+    color: var(--bg-card);
     border: none;
     display: flex;
     align-items: center;
@@ -213,7 +218,7 @@
 }
 
 .search-btn:hover {
-    background: #004d54;
+    background: var(--primary-light);
 }
 
 /* ── Nav Actions ── */
@@ -233,19 +238,19 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--text-secondary);
     transition: all 0.22s ease;
     cursor: pointer;
 }
 
 .nav-icon-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    background: var(--bg-main);
+    color: var(--text-primary);
 }
 
 .nav-icon-btn.nav-active {
-    color: #23E5DB;
-    background: rgba(35, 229, 219, 0.10);
+    color: var(--accent);
+    background: var(--bg-main);
 }
 
 .notif-dot {
@@ -256,7 +261,7 @@
     height: 7px;
     background: #FF5B5B;
     border-radius: 50%;
-    border: 1.5px solid #0A1F1C;
+    border: 1.5px solid var(--surface-dark);
 }
 
 .badge-count {
@@ -273,15 +278,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid #0A1F1C;
+    border: 1.5px solid var(--surface-dark);
     padding: 0 3px;
 }
 
 .nav-divider {
     width: 1px;
     height: 28px;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--border);
     margin: 0 4px;
+}
+
+/* Theme Toggle */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    transition: all 0.22s ease;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+.theme-toggle-btn:hover {
+    background: var(--bg-main);
+    color: var(--text-primary);
 }
 
 .login-btn {
@@ -290,27 +314,26 @@
     gap: 9px;
     padding: 6px 12px 6px 8px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    background: var(--bg-main);
     cursor: pointer;
     transition: all 0.22s ease;
 }
 
 .login-btn:hover {
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--border);
 }
 
 .avatar-ring {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: rgba(35, 229, 219, 0.15);
-    border: 1.5px solid rgba(35, 229, 219, 0.4);
+    background: var(--bg-main);
+    border: 1.5px solid var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #23E5DB;
+    color: var(--accent);
 }
 
 .login-text {
@@ -323,7 +346,7 @@
 .login-hint {
     font-size: 9px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     line-height: 1;
@@ -332,7 +355,7 @@
 .login-label {
     font-size: 13px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     line-height: 1.2;
 }
 
@@ -342,27 +365,26 @@
     gap: 6px;
     padding: 0 18px;
     height: 38px;
-    background: linear-gradient(135deg, #FFCE32, #FFB300);
-    color: #002F34;
+    background: var(--primary);
+    color: var(--bg-card);
     border-radius: 10px;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 600;
     border: none;
     cursor: pointer;
     transition: all 0.22s ease;
-    box-shadow: 0 3px 12px rgba(255, 206, 50, 0.3);
     white-space: nowrap;
 }
 
 .sell-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 206, 50, 0.45);
+    background: var(--primary-light);
 }
 
 /* ── Mobile ── */
 .mobile-menu-toggle {
     display: none;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-primary);
     padding: 8px;
     border-radius: 10px;
     cursor: pointer;
@@ -371,13 +393,13 @@
 }
 
 .mobile-menu-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--bg-main);
 }
 
 .mobile-menu {
-    background: #0f2926;
+    background: var(--surface-dark);
     padding: 14px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -392,7 +414,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 1px solid var(--border);
     padding-top: 10px;
 }
 
@@ -404,7 +426,7 @@
     border-radius: 8px;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     transition: background 0.15s;
     cursor: pointer;
     background: none;
@@ -412,7 +434,7 @@
 }
 
 .mobile-nav-links button:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-main);
 }
 
 .mobile-login-btn,
@@ -431,22 +453,18 @@
 }
 
 .mobile-login-btn {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
 }
 
 .mobile-sell-btn {
-    background: linear-gradient(135deg, #FFCE32, #FFB300);
-    color: #002F34;
+    background: var(--primary);
+    color: var(--bg-card);
 }
 
 @media (max-width: 860px) {
-    .navbar-location {
-        display: none;
-    }
-
-    .navbar-actions {
+    .navbar-location, .navbar-actions {
         display: none;
     }
 

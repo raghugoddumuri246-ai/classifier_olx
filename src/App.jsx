@@ -16,6 +16,7 @@ function App() {
   const [selectedLocation, setSelectedLocation] = useState('All India');
   const [authModal, setAuthModal] = useState(null); // null | 'login' | 'signup'
   const [sellModal, setSellModal] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
     <BrowserRouter>
@@ -26,6 +27,7 @@ function App() {
           selectedLocation={selectedLocation}
           onLoginClick={() => setAuthModal('login')}
           onSellClick={() => setSellModal(true)}
+          onOpenFilters={() => setFiltersOpen(true)}
           wishlistCount={6}
         />
 
@@ -38,6 +40,9 @@ function App() {
                   searchQuery={searchQuery}
                   selectedLocation={selectedLocation}
                   onSearchChange={setSearchQuery}
+                  filtersOpen={filtersOpen}
+                  onCloseFilters={() => setFiltersOpen(false)}
+                  onOpenFilters={() => setFiltersOpen(true)}
                 />
               }
             />

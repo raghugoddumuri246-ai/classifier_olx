@@ -1,13 +1,13 @@
-/* ===== FOOTER ===== */
 .footer {
-    background: var(--surface-dark);
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--surface-dark); /* Should be light in light mode now */
+    color: var(--text-secondary);
     margin-top: 60px;
 }
 
 .footer-main {
     padding: 60px 0 40px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
 }
 
 .footer-grid {
@@ -39,7 +39,7 @@
 .brand-desc {
     font-size: 13px;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
     margin-bottom: 20px;
 }
 
@@ -51,13 +51,13 @@
 .social-links a {
     width: 36px;
     height: 36px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-main);
+    border: 1px solid var(--border);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary);
     transition: var(--transition);
 }
 
@@ -72,7 +72,7 @@
 .footer-links-group h4 {
     font-size: 13px;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-bottom: 16px;
@@ -87,7 +87,7 @@
 
 .footer-links-group ul a {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
     transition: color 0.2s;
 }
 
@@ -101,7 +101,7 @@
     gap: 8px;
     margin-top: 16px;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
 }
 
 .contact-info span {
@@ -124,7 +124,7 @@
 
 .footer-bottom p {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--text-muted);
 }
 
 .footer-bottom-links {
@@ -134,7 +134,7 @@
 
 .footer-bottom-links a {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
     transition: color 0.2s;
 }
 
@@ -145,13 +145,13 @@
 .scroll-top-btn {
     width: 34px;
     height: 34px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--bg-main);
+    border: 1px solid var(--border);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition);
 }
