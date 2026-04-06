@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px;
-    background: #0A1F1C;
+    background: var(--primary);
     flex-shrink: 0;
 }
 
@@ -117,11 +117,11 @@
 }
 
 .sell-step.active {
-    color: #002F34;
+    color: var(--primary);
 }
 
 .sell-step.done {
-    color: #23E5DB;
+    color: var(--accent);
 }
 
 .step-circle {
@@ -141,9 +141,9 @@
 }
 
 .sell-step.active .step-circle {
-    border-color: #002F34;
-    color: #002F34;
-    background: rgba(0, 47, 52, 0.06);
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.06);
 }
 
 .sell-step.done .step-circle {
@@ -206,9 +206,9 @@
 }
 
 .cat-list-item:hover {
-    background: #F8FAFA;
+    background: var(--bg-main);
     padding-left: 24px;
-    color: #002F34;
+    color: var(--primary);
 }
 
 .cat-list-item .rt-arrow {
@@ -217,7 +217,7 @@
 }
 
 .cat-list-item:hover .rt-arrow {
-    color: #002F34;
+    color: var(--primary);
     transform: translateX(4px) rotate(-90deg) !important;
 }
 
@@ -246,7 +246,7 @@
     justify-content: space-between;
     font-size: 14.5px;
     font-weight: 700;
-    color: #002F34;
+    color: var(--primary);
 }
 
 .sc-change {
@@ -415,17 +415,17 @@
 }
 
 .cond-chip:hover {
-    border-color: #002F34;
-    color: #002F34;
-    background: #F9FAFB;
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-main);
     transform: translateY(-1px);
 }
 
 .cond-chip.active {
-    background: #002F34;
-    border-color: #002F34;
+    background: var(--primary);
+    border-color: var(--primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 47, 52, 0.15);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Price */
@@ -440,7 +440,7 @@
     left: 16px;
     font-size: 16px;
     font-weight: 700;
-    color: #002F34;
+    color: var(--primary);
 }
 
 .price-wrap input {
@@ -458,7 +458,7 @@
 }
 
 .toggle-label input {
-    accent-color: #002F34;
+    accent-color: var(--primary);
     width: 16px;
     height: 16px;
 }
@@ -496,17 +496,17 @@
     border-radius: 10px;
     font-size: 13.5px;
     font-weight: 700;
-    background: linear-gradient(135deg, #002F34, #004d54);
-    color: #fff;
+    background: var(--primary);
+    color: var(--bg-card);
     border: none;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 4px 16px rgba(0, 47, 52, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .sell-next-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 47, 52, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 /* ── Image step ── */

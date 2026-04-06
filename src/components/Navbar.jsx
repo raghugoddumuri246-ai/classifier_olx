@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { MapPin, ChevronDown, Menu, X, Bell, Heart, Plus, User, Search, Sun, Moon, Filter } from 'lucide-react';
+import { MapPin, ChevronDown, Menu, X, Bell, Heart, Plus, User, Search, Sun, Moon } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { locations } from '../data/listings';
 import '../styles/Navbar.css';
 
-export default function Navbar({ onSearch, onLocationChange, selectedLocation, onLoginClick, onSellClick, onOpenFilters, wishlistCount = 0 }) {
+export default function Navbar({ onSearch, onLocationChange, selectedLocation, onLoginClick, onSellClick, wishlistCount = 0 }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [locationOpen, setLocationOpen] = useState(false);
     const [query, setQuery] = useState('');
@@ -104,15 +104,6 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
                         <Heart size={19} />
                         {wishlistCount > 0 && <span className="badge-count">{wishlistCount}</span>}
                     </button>
-                    {onOpenFilters && (
-                        <button
-                            className="nav-icon-btn"
-                            title="Filters"
-                            onClick={onOpenFilters}
-                        >
-                            <Filter size={19} />
-                        </button>
-                    )}
                     <div className="nav-divider" />
                     <button className="theme-toggle-btn" onClick={toggleTheme} title="Toggle Theme">
                         {isDark ? <Sun size={19} /> : <Moon size={19} />}

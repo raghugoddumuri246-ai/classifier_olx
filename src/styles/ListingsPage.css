@@ -134,6 +134,27 @@
     gap: 10px;
 }
 
+/* Toolbar Filter */
+.toolbar-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toolbar-filter-btn:hover {
+    border-color: var(--primary);
+    background: var(--bg-main);
+}
+
 /* Sort */
 .sort-wrapper {
     position: relative;
@@ -272,11 +293,10 @@
     color: #fff;
 }
 
-/* Listings Grid */
 .listings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 32px 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px 28px;
 }
 
 .listings-grid.list-view {

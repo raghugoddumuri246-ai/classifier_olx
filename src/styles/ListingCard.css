@@ -23,7 +23,7 @@
     position: relative;
     overflow: hidden;
     background: #f0f0f0;
-    aspect-ratio: 4 / 3;
+    height: 260px;
 }
 
 .card-image {
@@ -164,29 +164,4 @@
     align-items: center;
     gap: 4px;
 }
-
-.card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-.card-time {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.card-seller {
-    font-weight: 600;
-    color: var(--text-secondary);
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+

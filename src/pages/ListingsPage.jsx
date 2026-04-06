@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { LayoutGrid, List, SortDesc, ChevronDown, X } from 'lucide-react';
+import { LayoutGrid, List, SortDesc, ChevronDown, X, Filter } from 'lucide-react';
 import ListingCard from '../components/ListingCard';
 import HeroBanner from '../components/HeroBanner';
 import CategoryGrid from '../components/CategoryGrid';
@@ -118,6 +118,16 @@ export default function ListingsPage({ searchQuery, selectedLocation, onSearchCh
                             </div>
 
                             <div className="toolbar-right">
+                                {/* Filters */}
+                                <button
+                                    className="toolbar-filter-btn"
+                                    onClick={onOpenFilters}
+                                    title="Open Filters"
+                                >
+                                    <Filter size={15} />
+                                    <span>Filters</span>
+                                </button>
+
                                 {/* Sort */}
                                 <div className="sort-wrapper" onClick={() => setSortOpen(!sortOpen)}>
                                     <SortDesc size={15} />

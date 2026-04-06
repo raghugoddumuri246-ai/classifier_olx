@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Youtube, ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 export default function Footer() {
@@ -27,29 +28,17 @@ export default function Footer() {
 
                     {/* Links */}
                     <div className="footer-links-group">
-                        <h4>Popular Categories</h4>
-                        <ul>
-                            {['Cars & Vehicles', 'Property & Real Estate', 'Mobile Phones', 'Electronics', 'Bikes & Motorcycles', 'Furniture'].map((item) => (
-                                <li key={item}><a href="#">{item}</a></li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="footer-links-group">
                         <h4>Company</h4>
                         <ul>
-                            {['About OLX', 'Careers', 'Press & Media', 'Safety Tips', 'Blog', 'Partner Program'].map((item) => (
-                                <li key={item}><a href="#">{item}</a></li>
-                            ))}
+                            <li><Link to="/info/about">About OLX</Link></li>
                         </ul>
                     </div>
 
                     <div className="footer-links-group">
                         <h4>Support</h4>
                         <ul>
-                            {['Help Center', 'Terms of Use', 'Privacy Policy', 'Cookie Policy', 'Accessibility', 'Report Abuse'].map((item) => (
-                                <li key={item}><a href="#">{item}</a></li>
-                            ))}
+                            <li><Link to="/info/terms">Terms of Service</Link></li>
+                            <li><Link to="/info/privacy">Privacy Policy</Link></li>
                         </ul>
                         <div className="contact-info">
                             <span><Phone size={13} /> 1800-123-4567</span>
@@ -63,9 +52,8 @@ export default function Footer() {
                 <div className="container footer-bottom-inner">
                     <p>© 2024 OLX Group B.V. All Rights Reserved.</p>
                     <div className="footer-bottom-links">
-                        <a href="#">Privacy</a>
-                        <a href="#">Terms</a>
-                        <a href="#">Cookies</a>
+                        <Link to="/info/privacy">Privacy</Link>
+                        <Link to="/info/terms">Terms</Link>
                     </div>
                     <button className="scroll-top-btn" onClick={scrollTop} title="Back to top">
                         <ArrowUp size={16} />

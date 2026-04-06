@@ -1,82 +1,102 @@
-import { useState } from 'react';
-import { Filter, Zap, ShieldCheck, Tag, Star } from 'lucide-react';
-import heroBgLight from '../assets/hero_3d_isolated_light.png';
-import heroBgDark from '../assets/hero_3d_isolated_dark.png';
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import bgCars from '../assets/hero_bg_cars.png';
+import bgTech from '../assets/hero_bg_tech.png';
+import bgHome from '../assets/hero_bg_home.png';
 import '../styles/HeroBanner.css';
 
-export default function HeroBanner({ onSearch, selectedLocation, onOpenFilters }) {
+const slides = [
+    {
+        id: 1,
+        image: bgTech,
+        title: "Discover Premium Deals",
+        subtitle: "India's #1 Marketplace for authentic and verified electronics.",
+        btnPrimary: "Explore Electronics",
+        btnSecondary: "Start Selling"
+    },
+    {
+        id: 2,
+        image: bgCars,
+        title: "Your Dream Ride Awaits",
+        subtitle: "Thousands of verified cars at unbeatable prices.",
+        btnPrimary: "Browse Cars",
+        btnSecondary: "Post an Ad"
+    },
+    {
+        id: 3,
+        image: bgHome,
+        title: "Find Your Perfect Home",
+        subtitle: "Discover properties that match your lifestyle and budget.",
+        btnPrimary: "Search Properties",
+        btnSecondary: "List Your Home"
+    }
+];
+
+export default function HeroBanner({ onOpenFilters }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            handleNext();
+        }, 6000);
+        return () => clearInterval(timer);
+    }, [currentIndex]);
+
+    const handleNext = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex((prev) => (prev + 1) % slides.length);
+        setTimeout(() => setIsAnimating(false), 500);
+    };
+
+    const handlePrev = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+        setTimeout(() => setIsAnimating(false), 500);
+    };
+
     return (
-        <section className="hero">
-            <div className="hero-glow-blob top-left"></div>
-            <div className="hero-glow-blob bottom-right"></div>
-            
-            <div className="container hero-content">
-                <div className="hero-text-content">
-                    {/* Eyebrow */}
-                    <div className="hero-eyebrow">
-                        <Zap size={13} fill="currentColor" />
-                        India's #1 Marketplace — Trusted by 150M+ Users
-                    </div>
+        <section className="hero-slider-section">
+            <div className="hero-slider-container">
+                {slides.map((slide, index) => {
+                    let position = "next";
+                    if (index === currentIndex) position = "active";
+                    else if (index === (currentIndex - 1 + slides.length) % slides.length) position = "prev";
 
-                    {/* Headline */}
-                    <h1 className="hero-heading">
-                        Unlock The Best Deals <em>Around You</em>
-                    </h1>
+                    return (
+                        <div className={`hero-slide ${position}`} key={slide.id}>
+                            <img src={slide.image} alt="Background" className="hero-slide-bg" />
+                            <div className="hero-slide-overlay">
+                                <div className="hero-slide-content">
+                                    <h1 className="hero-slide-title">{slide.title}</h1>
+                                    <p className="hero-slide-subtitle">{slide.subtitle}</p>
+                                    <div className="hero-slide-actions">
+                                        <button className="btn-primary" onClick={onOpenFilters}>{slide.btnPrimary}</button>
+                                        <button className="btn-secondary">{slide.btnSecondary}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
 
-                    {/* Description */}
-                    <p className="hero-desc">
-                        Your premium destination for buying and selling cars, electronics, properties, and more. 
-                        Experience seamless trading every single day.
-                    </p>
+                <button className="slider-arrow left-arrow" onClick={handlePrev}>
+                    <ChevronLeft size={24} />
+                </button>
+                <button className="slider-arrow right-arrow" onClick={handleNext}>
+                    <ChevronRight size={24} />
+                </button>
 
-                    {/* Filters CTA */}
-                    <div className="hero-actions">
-                        <button className="hero-filter-btn" onClick={onOpenFilters}>
-                            <Filter size={18} />
-                            Filters
-                        </button>
-                        <button className="hero-outline-btn">
-                            Explore Categories
-                        </button>
-                    </div>
-                    
-                    <div className="hero-stats">
-                        <div className="stat-item">
-                            <h4>150M+</h4>
-                            <p>Active Users</p>
-                        </div>
-                        <div className="stat-item">
-                            <h4>50M+</h4>
-                            <p>Live Ads</p>
-                        </div>
-                        <div className="stat-item">
-                            <h4>#1</h4>
-                            <p>Marketplace</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="hero-image-content">
-                    <div className="hero-image-wrapper">
-                        <img src={heroBgLight} alt="3D Marketplace Light" className="hero-3d-img light-img" />
-                        <img src={heroBgDark} alt="3D Marketplace Dark" className="hero-3d-img dark-img" />
-                        
-                        {/* Floating elements */}
-                        <div className="floating-pill pill-1">
-                            <div className="pill-icon"><ShieldCheck size={14} /></div>
-                            <span>Verified Sellers</span>
-                        </div>
-                        
-                        <div className="floating-pill pill-2">
-                            <div className="pill-icon"><Tag size={14} /></div>
-                            <span>Best Prices</span>
-                        </div>
-                        
-                        <div className="floating-pill pill-3">
-                            <div className="pill-icon"><Star size={14} /></div>
-                            <span>Premium Quality</span>
-                        </div>
-                    </div>
+                <div className="hero-slider-dots">
+                    {slides.map((_, idx) => (
+                        <div 
+                            key={idx} 
+                            className={`dot ${idx === currentIndex ? 'active' : ''}`}
+                            onClick={() => setCurrentIndex(idx)}
+                        />
+                    ))}
                 </div>
             </div>
         </section>

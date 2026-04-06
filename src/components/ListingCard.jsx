@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, MapPin, Eye, Clock, Star, Zap } from 'lucide-react';
+import { Heart, MapPin, Eye, Star, Zap } from 'lucide-react';
 import '../styles/ListingCard.css';
 
 function formatPrice(price, category) {
@@ -86,14 +86,6 @@ export default function ListingCard({ listing }) {
                         <Eye size={12} />
                         {listing.views}
                     </span>
-                </div>
-
-                <div className="card-footer">
-                    <span className="card-time">
-                        <Clock size={11} />
-                        {timeAgo(listing.postedAt)}
-                    </span>
-                    <span className="card-seller">{listing.seller}</span>
                 </div>
             </div>
         </Link>
