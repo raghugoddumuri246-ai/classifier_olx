@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, ChevronDown, Menu, X, Bell, Heart, Plus, User, Search, Sun, Moon } from 'lucide-react';
+import { MapPin, ChevronDown, Menu, X, Plus, User, Search, Sun, Moon } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { locations } from '../data/listings';
 import '../styles/Navbar.css';
@@ -88,23 +88,6 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
 
                 {/* Nav Actions */}
                 <nav className="navbar-actions">
-                    <button
-                        className={`nav-icon-btn ${loc.pathname === '/notifications' ? 'nav-active' : ''}`}
-                        title="Notifications"
-                        onClick={() => navigate('/notifications')}
-                    >
-                        <Bell size={19} />
-                        <span className="notif-dot" />
-                    </button>
-                    <button
-                        className={`nav-icon-btn ${loc.pathname === '/wishlist' ? 'nav-active' : ''}`}
-                        title="Wishlist"
-                        onClick={() => navigate('/wishlist')}
-                    >
-                        <Heart size={19} />
-                        {wishlistCount > 0 && <span className="badge-count">{wishlistCount}</span>}
-                    </button>
-                    <div className="nav-divider" />
                     <button className="theme-toggle-btn" onClick={toggleTheme} title="Toggle Theme">
                         {isDark ? <Sun size={19} /> : <Moon size={19} />}
                     </button>
@@ -134,10 +117,6 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
                     <div className="mobile-actions">
                         <button className="mobile-login-btn" onClick={() => { onLoginClick(); setMenuOpen(false); }}><User size={15} /> Login</button>
                         <button className="mobile-sell-btn" onClick={() => { onSellClick(); setMenuOpen(false); }}><Plus size={15} /> Sell Now</button>
-                    </div>
-                    <div className="mobile-nav-links">
-                        <button onClick={() => { navigate('/notifications'); setMenuOpen(false); }}><Bell size={15} /> Notifications</button>
-                        <button onClick={() => { navigate('/wishlist'); setMenuOpen(false); }}><Heart size={15} /> Wishlist</button>
                     </div>
                 </div>
             )}

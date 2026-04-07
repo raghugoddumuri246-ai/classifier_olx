@@ -325,6 +325,7 @@
 
 .listings-grid.list-view .card-title {
     -webkit-line-clamp: 1;
+    line-clamp: 1;
     min-height: auto;
     flex: 1 1 100%;
 }
@@ -395,8 +396,8 @@
 
 @media (max-width: 500px) {
     .listings-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .listings-grid.list-view {

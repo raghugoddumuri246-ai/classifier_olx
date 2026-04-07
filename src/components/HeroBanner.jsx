@@ -68,16 +68,6 @@ export default function HeroBanner({ onOpenFilters }) {
                     return (
                         <div className={`hero-slide ${position}`} key={slide.id}>
                             <img src={slide.image} alt="Background" className="hero-slide-bg" />
-                            <div className="hero-slide-overlay">
-                                <div className="hero-slide-content">
-                                    <h1 className="hero-slide-title">{slide.title}</h1>
-                                    <p className="hero-slide-subtitle">{slide.subtitle}</p>
-                                    <div className="hero-slide-actions">
-                                        <button className="btn-primary" onClick={onOpenFilters}>{slide.btnPrimary}</button>
-                                        <button className="btn-secondary">{slide.btnSecondary}</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     );
                 })}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import '../styles/AdvertisementSection.css';
 
@@ -82,8 +82,6 @@ const adCampaigns = [
     }
 ];
 
-// Only display exactly 3 cards
-const topAds = adCampaigns.slice(0, 3);
 
 function AdCard({ ad }) {
     const [imgIdx, setImgIdx] = useState(0);
@@ -137,17 +135,33 @@ function AdCard({ ad }) {
 }
 
 export default function AdvertisementSection() {
+    const scrollRef = useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            // card width ~320 + gap ~36 = ~356
+            const scrollAmount = direction === 'left' ? -356 : 356;
+            scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     return (
         <section className="ads-section">
             <div className="container">
-                <div className="ads-header">
+                <div className="ads-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                     <h2>Featured Promoted Listings</h2>
+                    <div className="ads-nav-buttons">
+                        <button onClick={() => scroll('left')} className="ads-nav-btn" aria-label="Scroll left"><ChevronLeft size={20}/></button>
+                        <button onClick={() => scroll('right')} className="ads-nav-btn" aria-label="Scroll right"><ChevronRight size={20}/></button>
+                    </div>
                 </div>
                 
-                <div className="ads-grid-container">
-                    {topAds.map((ad) => (
-                        <AdCard key={ad.id} ad={ad} />
-                    ))}
+                <div className="ads-carousel-wrapper" ref={scrollRef}>
+                    <div className="ads-carousel-track">
+                        {adCampaigns.map((ad, idx) => (
+                            <AdCard key={ad.id + '-' + idx} ad={ad} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

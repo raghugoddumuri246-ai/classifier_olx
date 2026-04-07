@@ -34,47 +34,49 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 16px 8px 14px;
+    gap: 12px;
+    padding: 22px 10px 18px;
     background: var(--bg-card);
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
+    border: none;
+    border-radius: 20px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .cat-card:hover {
-    transform: translateY(-4px);
-    border-color: transparent;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+    /* Subtle glow via ring */
+    box-shadow: 0 0 0 2px var(--border), 0 16px 36px rgba(0, 0, 0, 0.12);
 }
 
 .cat-card:hover .cat-icon-wrap {
-    transform: scale(1.08) rotate(-3deg);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    transform: scale(1.12) rotate(-5deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .cat-icon-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .cat-emoji {
-    font-size: 24px;
+    font-size: 28px;
     display: block;
     line-height: 1;
 }
 
 .cat-name {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 800;
     color: var(--text-primary);
     line-height: 1.2;
 }
