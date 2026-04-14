@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { locations } from '../data/listings';
 import '../styles/Navbar.css';
 
-export default function Navbar({ onSearch, onLocationChange, selectedLocation, onLoginClick, onSellClick, wishlistCount = 0 }) {
+export default function Navbar({ onSearch, onLocationChange, selectedLocation, onLoginClick, onSellClick, wishlistCount = 0, user, onLogout }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [locationOpen, setLocationOpen] = useState(false);
     const [query, setQuery] = useState('');
@@ -92,13 +92,28 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
                         {isDark ? <Sun size={19} /> : <Moon size={19} />}
                     </button>
                     <div className="nav-divider" />
-                    <button className="login-btn" onClick={onLoginClick}>
-                        <div className="avatar-ring"><User size={14} /></div>
-                        <div className="login-text">
-                            <span className="login-hint">Account</span>
-                            <span className="login-label">Login</span>
+                    {user ? (
+                        <div className="user-profile-nav">
+                            <button className="login-btn user-active" onClick={() => {}}>
+                                <div className="avatar-ring success"><User size={14} /></div>
+                                <div className="login-text">
+                                    <span className="login-hint">Welcome,</span>
+                                    <span className="login-label">{user.name.split(' ')[0]}</span>
+                                </div>
+                            </button>
+                            <button className="logout-btn" onClick={onLogout} title="Logout">
+                                <X size={14} />
+                            </button>
                         </div>
-                    </button>
+                    ) : (
+                        <button className="login-btn" onClick={onLoginClick}>
+                            <div className="avatar-ring"><User size={14} /></div>
+                            <div className="login-text">
+                                <span className="login-hint">Account</span>
+                                <span className="login-label">Login</span>
+                            </div>
+                        </button>
+                    )}
                     <button className="sell-btn" onClick={onSellClick}>
                         <Plus size={15} strokeWidth={2.5} />
                         <span>Sell Now</span>
@@ -115,7 +130,16 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
             {menuOpen && (
                 <div className="mobile-menu">
                     <div className="mobile-actions">
-                        <button className="mobile-login-btn" onClick={() => { onLoginClick(); setMenuOpen(false); }}><User size={15} /> Login</button>
+                        {user ? (
+                            <>
+                                <div className="mobile-user-info">
+                                    <User size={15} /> {user.name}
+                                </div>
+                                <button className="mobile-logout-btn" onClick={() => { onLogout(); setMenuOpen(false); }}>Logout</button>
+                            </>
+                        ) : (
+                            <button className="mobile-login-btn" onClick={() => { onLoginClick(); setMenuOpen(false); }}><User size={15} /> Login</button>
+                        )}
                         <button className="mobile-sell-btn" onClick={() => { onSellClick(); setMenuOpen(false); }}><Plus size={15} /> Sell Now</button>
                     </div>
                 </div>

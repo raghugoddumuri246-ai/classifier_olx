@@ -20,22 +20,48 @@ function InputField({ icon: Icon, type = 'text', placeholder, value, onChange, n
     );
 }
 
-export default function AuthModal({ mode: initialMode = 'login', onClose }) {
+export default function AuthModal({ mode: initialMode = 'login', onClose, setUser }) {
     const [mode, setMode] = useState(initialMode); // 'login' | 'signup'
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' });
     const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState('');
 
     const update = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
+        setError('');
+
+        const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
+        const url = `http://localhost:5000${endpoint}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Something went wrong');
+            }
+
+            // Success
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            setUser(data);
             setLoading(false);
             setSubmitted(true);
-        }, 1400);
+        } catch (err) {
+            setError(err.message);
+            setLoading(false);
+        }
     };
 
     const switchMode = (m) => {
@@ -43,6 +69,7 @@ export default function AuthModal({ mode: initialMode = 'login', onClose }) {
         setForm({ name: '', email: '', phone: '', password: '' });
         setSubmitted(false);
         setShowPassword(false);
+        setError('');
     };
 
     return (
@@ -120,6 +147,8 @@ export default function AuthModal({ mode: initialMode = 'login', onClose }) {
                                     </button>
                                 </p>
                             </div>
+
+                            {error && <div className="auth-error-msg">{error}</div>}
 
                             <form className="auth-form" onSubmit={handleSubmit}>
                                 {mode === 'signup' && (

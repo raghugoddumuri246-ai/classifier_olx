@@ -18,6 +18,12 @@ function App() {
   const [authModal, setAuthModal] = useState(null); // null | 'login' | 'signup'
   const [sellModal, setSellModal] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userInfo')));
+
+  const handleLogout = () => {
+    localStorage.removeItem('userInfo');
+    setUser(null);
+  };
 
   return (
     <BrowserRouter>
@@ -30,6 +36,8 @@ function App() {
           onSellClick={() => setSellModal(true)}
           onOpenFilters={() => setFiltersOpen(true)}
           wishlistCount={6}
+          user={user}
+          onLogout={handleLogout}
         />
 
         <main>
@@ -58,7 +66,11 @@ function App() {
 
         {/* Modals */}
         {authModal && (
-          <AuthModal mode={authModal} onClose={() => setAuthModal(null)} />
+          <AuthModal 
+            mode={authModal} 
+            onClose={() => setAuthModal(null)} 
+            setUser={setUser}
+          />
         )}
         {sellModal && (
           <SellNowModal onClose={() => setSellModal(false)} />
