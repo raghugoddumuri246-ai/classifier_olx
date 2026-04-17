@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, ChevronDown, Menu, X, Plus, User, Search, Sun, Moon } from 'lucide-react';
+import { MapPin, ChevronDown, Menu, X, Plus, User, Search, Sun, Moon, Package } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { locations } from '../data/listings';
 import '../styles/Navbar.css';
@@ -101,6 +101,16 @@ export default function Navbar({ onSearch, onLocationChange, selectedLocation, o
                                     <span className="login-label">{user.name.split(' ')[0]}</span>
                                 </div>
                             </button>
+                            <button className="my-ads-nav-btn" onClick={() => navigate('/my-ads')} title="My Ads">
+                                <Package size={14} />
+                                <span>My Ads</span>
+                            </button>
+                            {user.role === 'admin' && (
+                                <button className="admin-nav-btn" onClick={() => navigate('/admin')} title="Admin Panel">
+                                    <Plus size={14} style={{ transform: 'rotate(45deg)' }} />
+                                    <span>Admin</span>
+                                </button>
+                            )}
                             <button className="logout-btn" onClick={onLogout} title="Logout">
                                 <X size={14} />
                             </button>

@@ -1,29 +1,41 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     X, Upload, Plus, Trash2, Tag, DollarSign, MapPin,
     FileText, Package, ChevronDown, Camera, CheckCircle
 } from 'lucide-react';
-import '../styles/SellNowModal.css';
-
-const CATEGORIES = [
-    '📱 Mobiles & Tablets', '💻 Electronics', '🚗 Cars & Vehicles',
-    '🏍️ Bikes & Motorcycles', '🏠 Property', '🛋️ Furniture & Decor',
-    '👗 Fashion', '📚 Books & Education', '💼 Jobs', '🐶 Pets',
-    '⚽ Sports & Hobbies', '🔧 Tools & Machinery', '🌾 Agriculture', '✨ Others'
-];
+import axios from 'axios';
 
 const CONDITIONS = ['Brand New', 'Like New', 'Good', 'Fair', 'For Parts'];
 
 export default function SellNowModal({ onClose }) {
     const [step, setStep] = useState(0); // 0=category, 1=subcategory/details, 2=images, 3=done
     const [images, setImages] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [dragOver, setDragOver] = useState(false);
     const [form, setForm] = useState({
-        title: '', category: '', price: '', condition: '',
-        description: '', location: '', brand: '', year: '', negotiable: false,
+        title: '', category: '', categoryId: '', price: '', condition: '',
+        description: '', location: '', locationId: '', brand: '', year: '', negotiable: false,
         subCategory: '', type: '', bhk: '', bathrooms: '', furnishing: '', listedBy: ''
     });
     const fileInputRef = useRef();
+
+    useEffect(() => {
+        const fetchCommonData = async () => {
+            try {
+                const [catRes, locRes] = await Promise.all([
+                    axios.get('http://localhost:5000/api/categories'),
+                    axios.get('http://localhost:5000/api/locations')
+                ]);
+                setCategories(catRes.data);
+                setLocations(locRes.data);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            }
+        };
+        fetchCommonData();
+    }, []);
 
     const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -49,13 +61,45 @@ export default function SellNowModal({ onClose }) {
 
     const removeImage = (id) => setImages(prev => prev.filter(i => i.id !== id));
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setStep(3);
+        setLoading(true);
+        try {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            const config = {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}` 
+                }
+            };
+            
+            const payload = {
+                ...form,
+                category: form.categoryId,
+                location: form.locationId,
+                images: images.map(img => img.url), // Using preview URLs as mock for now as agreed
+                details: {
+                    type: form.type,
+                    bhk: form.bhk,
+                    bathrooms: form.bathrooms,
+                    furnishing: form.furnishing,
+                    listedBy: form.listedBy,
+                    brand: form.brand,
+                    year: form.year
+                }
+            };
+
+            await axios.post('http://localhost:5000/api/products', payload, config);
+            setStep(3);
+        } catch (err) {
+            console.error('Submission error:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCategorySelect = (cat) => {
-        update('category', cat);
+        setForm(f => ({ ...f, category: cat.name, categoryId: cat._id }));
         setStep(1);
     };
 
@@ -92,9 +136,9 @@ export default function SellNowModal({ onClose }) {
                     <div className="sell-body category-select-body">
                         <h3 className="cat-sel-title">CHOOSE A CATEGORY</h3>
                         <div className="category-list">
-                            {CATEGORIES.map(c => (
-                                <button key={c} className="cat-list-item" onClick={() => handleCategorySelect(c)}>
-                                    <span>{c}</span>
+                            {categories.map(c => (
+                                <button key={c._id} className="cat-list-item" onClick={() => handleCategorySelect(c)}>
+                                    <span>{c.icon} {c.name}</span>
                                     <ChevronDown size={16} className="rt-arrow" style={{ transform: 'rotate(-90deg)' }} />
                                 </button>
                             ))}
@@ -114,7 +158,7 @@ export default function SellNowModal({ onClose }) {
                                 </div>
                             </div>
 
-                            <div className="sell-form-grid">
+                            <div className="sell-details-section">
                                 <h3 className="section-sub-title full">INCLUDE SOME DETAILS</h3>
 
                                 {/* Conditional Property Fields */}
@@ -252,35 +296,35 @@ export default function SellNowModal({ onClose }) {
                                     </label>
                                 </div>
 
-                                {/* Location */}
                                 <div className="sell-field full">
                                     <label className="section-sub-title form-sp">CONFIRM YOUR LOCATION</label>
                                     <div className="location-box">
                                         <MapPin size={16} />
                                         <select
                                             className="location-select"
-                                            value={form.location}
-                                            onChange={e => update('location', e.target.value)}
+                                            value={form.locationId}
+                                            onChange={(e) => {
+                                                const loc = locations.find(l => l._id === e.target.value);
+                                                update('locationId', e.target.value);
+                                                update('location', loc?.name);
+                                            }}
                                             required
                                         >
-                                            <option value="" disabled>Select your city or area</option>
-                                            <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
-                                            <option value="Delhi, NCR">Delhi, NCR</option>
-                                            <option value="Bangalore, Karnataka">Bangalore, Karnataka</option>
-                                            <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
-                                            <option value="Chennai, Tamil Nadu">Chennai, Tamil Nadu</option>
-                                            <option value="Kolkata, West Bengal">Kolkata, West Bengal</option>
-                                            <option value="Pune, Maharashtra">Pune, Maharashtra</option>
-                                            <option value="Ahmedabad, Gujarat">Ahmedabad, Gujarat</option>
+                                            <option value="" disabled>Select your city</option>
+                                            {locations.map(l => (
+                                                <option key={l._id} value={l._id}>{l.name}</option>
+                                            ))}
                                         </select>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <div className="sell-footer-actions">
                             <button type="button" className="sell-cancel-btn" onClick={() => setStep(0)}>← Back</button>
-                            <button type="submit" className="sell-next-btn">Next: Add Photos →</button>
+                            <button type="submit" className="sell-next-btn" disabled={loading}>
+                                {loading ? 'Submitting...' : 'Next: Add Photos →'}
+                            </button>
                         </div>
                     </form>
                 )}

@@ -1,0 +1,253 @@
+.my-products-page {
+    padding: 40px 20px;
+    min-height: 80vh;
+}
+
+.my-ads-header {
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+}
+
+.my-ads-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.my-ads-sub {
+    color: var(--text-secondary);
+}
+
+.ads-grid-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ad-manage-card {
+    display: flex;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.ad-manage-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(5px);
+}
+
+.ad-card-img {
+    width: 240px;
+    height: 160px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ad-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ad-status-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+}
+
+.ad-status-overlay.pending { background: #B45309; }
+.ad-status-overlay.approved { background: #065F46; }
+.ad-status-overlay.rejected { background: #991B1B; }
+
+.ad-card-info {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ad-card-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.ad-card-price {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.ad-card-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background: var(--border-hover);
+    border-radius: 50%;
+}
+
+.ad-card-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.promote-btn-action {
+    background: #FFCE32;
+    color: #002F34;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.promote-btn-action:hover {
+    background: #002F34;
+    color: white;
+}
+
+.promoted-badge {
+    color: #10B981;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.view-ad-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Modal Styles */
+.promo-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.promo-modal {
+    background: white;
+    width: 100%;
+    max-width: 440px;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.promo-modal h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.promo-modal p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.offers-list-promo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.offer-item-promo {
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.offer-item-promo:hover {
+    border-color: var(--primary-light);
+}
+
+.offer-item-promo.active {
+    border-color: var(--primary);
+    background: rgba(27, 59, 100, 0.05);
+}
+
+.offer-p-title { font-weight: 700; flex: 1; text-align: left; }
+.offer-p-days { font-size: 12px; color: var(--text-muted); margin: 0 15px; }
+.offer-p-price { font-weight: 800; color: var(--primary); }
+
+.promo-pay-btn {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.promo-pay-btn:disabled { opacity: 0.5; }
+
+.promo-loading {
+    padding: 40px 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+    .ad-manage-card { flex-direction: column; }
+    .ad-card-img { width: 100%; }
+    .ad-card-info { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
